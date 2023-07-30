@@ -1,0 +1,54 @@
+spring:
+  port: 8090
+  servlet:
+    context-path: /batch
+  application:
+    name: batch-db2db
+    timezone: America/Los_Angeles
+  jpa:
+    generate-ddl: false
+    properties:
+      hibernate:
+        dialect: 'org.hibernate.community.dialect.Oracle10gDialect'
+        cache:
+          use_structured_entries: false
+          use_second_level_cache: false
+          use_query_cache: false
+          use_minimal_puts: false
+        jdbc:
+          batch_size: 1000
+    show-sql: true
+    database-platform: 'org.hibernate.community.dialect.Oracle10gDialect'
+  batch:
+    job:
+      initialize-schema: never
+      enabled: false
+  source-db:
+    datasource:
+      jdbcUrl: 'jdbc:oracle:thin:db_user/db_pwd@db_host:db_port/db_schema'
+      driverClassName: 'oracle.jdbc.driver.OracleDriver'
+      password: 'db_pwd'
+      validationQuery: 'SELECT 1'
+      username: 'db_user'
+      testWhileIdle: true
+  target-db:
+    datasource:
+      jdbcUrl: 'jdbc:oracle:thin:db_user/db_pwd@db_host:db_port/db_schema'
+      driverClassName: 'oracle.jdbc.driver.OracleDriver'
+      password: 'db_pwd'
+      validationQuery: 'SELECT 1'
+      username: 'db_user'
+      testWhileIdle: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    enabled-by-default: 'true'
+
+
+hibernate:
+  dialect: 'org.hibernate.community.dialect.Oracle10gDialect'
+  format_sql: 'true'
+  show_sql: 'true'
